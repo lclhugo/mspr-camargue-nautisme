@@ -1,0 +1,27 @@
+@use '../base/variables' as v;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* Base */
+
+body {
+  font-family: v.$main-font ;
+  font-size: 1rem;
+}
+
+
+
