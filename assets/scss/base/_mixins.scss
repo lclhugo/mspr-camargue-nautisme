@@ -1,0 +1,13 @@
+@use '../base/variables' as v;
+
+@mixin for-tablet {
+  @media (min-width: v.$bp-sm) {
+    @content;
+  }
+}
+
+@mixin for-desktop {
+  @media (min-width: v.$bp-md) {
+    @content;
+  }
+}
