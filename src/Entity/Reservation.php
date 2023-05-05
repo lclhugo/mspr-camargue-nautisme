@@ -20,7 +20,7 @@ class Reservation
     private ?string $emailClient = null;
 
     #[ORM\OneToMany(mappedBy: 'reservation', targetEntity: Equipment::class)]
-    private Collection $equipment;
+    private Collection $equipments;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateLocation = null;
@@ -33,7 +33,7 @@ class Reservation
 
     public function __construct()
     {
-        $this->equipment = new ArrayCollection();
+        $this->equipments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -56,24 +56,24 @@ class Reservation
     /**
      * @return Collection<int, Equipment>
      */
-    public function getEquipment(): Collection
+    public function getEquipments(): Collection
     {
-        return $this->equipment;
+        return $this->equipments;
     }
 
-    public function addEquipment(Equipment $equipment): self
+    public function addEquipments(Equipment $equipment): self
     {
-        if (!$this->equipment->contains($equipment)) {
-            $this->equipment->add($equipment);
+        if (!$this->equipments->contains($equipment)) {
+            $this->equipments->add($equipment);
             $equipment->setReservation($this);
         }
 
         return $this;
     }
 
-    public function removeEquipment(Equipment $equipment): self
+    public function removeEquipments(Equipment $equipment): self
     {
-        if ($this->equipment->removeElement($equipment)) {
+        if ($this->equipments->removeElement($equipment)) {
             // set the owning side to null (unless already changed)
             if ($equipment->getReservation() === $this) {
                 $equipment->setReservation(null);
