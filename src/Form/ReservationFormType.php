@@ -22,7 +22,7 @@ class ReservationFormType extends AbstractType
                 "choice_label" => "category.name"
             ])
             ->add('dateLocation', DateType::class, [
-                'format' => 'dd MM yyyy',
+//                'format' => 'dd MM yyyy',
                 'widget' => 'single_text'
             ])
             // ->add('createdAt')
