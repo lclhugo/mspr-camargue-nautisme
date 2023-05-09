@@ -1,0 +1,87 @@
+@use '../base/variables'as v;
+@use '../base/mixins'as m;
+
+.about {
+    margin: 0 auto;
+
+    .home-bloc {
+        width: 100%;
+        height:500px;
+        overflow:hidden;
+    }
+
+    .bg1 {
+        @include m.background(v.$home-bg1);
+        height: 100%;
+        width: 100%;
+    }
+
+    .bg2 {
+        @include m.background(v.$home-bg2);
+        height: 100%;
+        width: 100%;
+    }
+
+    .bg3 {
+        @include m.background(v.$home-bg3);
+        height: 100%;
+        width: 100%;
+    }
+
+    .home-txt {
+        display:flex;
+        flex-direction: column;
+        text-align: center;
+        color: v.$white;
+        padding: 2em;
+        background: v.$black-transparent;
+        gap: 0.7rem;
+        align-items: center;
+    }
+
+    h3 {
+        font-family: v.$fancy-font;
+    }
+
+    .line {
+        width: 40%;
+        height: 1px;
+        background-color: v.$white;
+        content: '';
+        margin-bottom: 1rem;
+    }
+
+}
+
+//media queries
+@include m.for-tablet {
+    .about {
+        display:flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+
+}
+
+@include m.for-desktop {
+    .about {
+        width: 100%;
+        height: 100vh;
+
+        .home-bloc {
+            height: 100vh;
+        }
+
+        .bg1, .bg2, .bg3 {
+            height: 100vh;
+        }
+
+        .bg1:hover, .bg2:hover, .bg3:hover {
+            transform: scale(1.2);
+            transition: transform 0.5s ease-in-out;
+        }
+    }
+
+}

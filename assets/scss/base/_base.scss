@@ -1,5 +1,6 @@
 @use '../base/variables' as v;
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
 
 /* Reset */
 * {
@@ -21,6 +22,15 @@ a {
 body {
   font-family: v.$main-font ;
   font-size: 1rem;
+}
+
+.d-flex-c-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.bg-primary{
+  background-color: v.$primary;
 }
 
 

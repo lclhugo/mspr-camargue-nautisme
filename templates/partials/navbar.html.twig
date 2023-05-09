@@ -1,18 +1,92 @@
-
-
 <header>
+
+
+
     <nav class="navbar">
-        <div>
-            <img src="img/logo.png" alt="logo">
+
+        <div class="nav-icons">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-times d-none"></i>
         </div>
-        <div>
-            <ul>
-                <li><a href="#">Accueil</a></li>
-                <li><a href="#">Contact</a></li>
-                <li><a href="#">Réservation</a></li>
-            </ul>
+        <div class="nav">
+            <div class="navbar-logo">
+            {#<a class="navbar-brand" href="#">Name</a>#}
+            </div>
+
+            <div class="navbar-nav">
+                <ul>
+                    <li><a class="nav-item" href="{{ path('app_home') }}">Accueil</a></li>
+                    <li>
+                        <div class="nav-item dropdown" id="dropdown">Nos sites <i class="fas fa-caret-down"></i> <i class="fas fa-caret-up d-none"></i>
+                        </div>
+                        <ul class="dropdown-content">
+                            <li><a class="nav-item" href="#">Palavas-les-flots</a></li>
+                            <li><a class="nav-item" href="#">Carnon</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="nav-item" href="#">Equipement</a></li>
+                    <li><a class="nav-item" href="#">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="navbar-booking">
+                    <a class="nav-item booking" href="#">Réservation</a>
+            </div>
         </div>
     </nav>
 </header>
+
+<script>
+
+    const navbar = document.querySelector('.nav');
+    const navbarLinks = document.querySelectorAll('.nav a');
+    const dropdown = document.querySelector('#dropdown');
+    const dropdownContent = document.querySelector('.dropdown-content');
+    const navIcons = document.querySelector('.nav-icons');
+
+    const menu = document.querySelector('.fa-bars');
+    const close = document.querySelector('.fa-times');
+
+    const caretDown = document.querySelector('.fa-caret-down');
+    const caretUp = document.querySelector('.fa-caret-up');
+
+    menu.addEventListener('click', () => {
+        navbar.classList.add('active');
+    });
+
+    close.addEventListener('click', () => {
+        navbar.classList.remove('active');
+    });
+
+    dropdown.addEventListener('click', () => {
+        dropdownContent.classList.toggle('active');
+    });
+
+    navbarLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            navbar.classList.remove('active');
+        });
+    });
+
+    menu.addEventListener('click', () => {
+        menu.classList.add('d-none');
+        close.classList.remove('d-none');
+    });
+
+    close.addEventListener('click', () => {
+        close.classList.add('d-none');
+        menu.classList.remove('d-none');
+    });
+
+    dropdown.addEventListener('click', () => {
+        caretDown.classList.toggle('d-none');
+        caretUp.classList.toggle('d-none');
+    });
+
+
+
+
+</script>
+
 
 

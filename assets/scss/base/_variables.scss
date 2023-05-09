@@ -1,13 +1,22 @@
 /* Colors */
-$primary : #ff0000;
-$secondary : #0000ff;
+$primary : rgba(30, 58, 138, 1);
+$secondary : rgba(17, 24, 39, 1);
+$tertiary : rgba(5, 150, 105, 1);
 
 $white : #ffffff;
 $black : #000000;
 
+$black-transparent : rgba(0, 0, 0, 0.7);
+
 /* Fonts */
 $main-font : 'Roboto', sans-serif;
+$fancy-font : 'Satisfy', cursive;
 
 /* Breakpoints */
-$bp-sm : 576px;
+$bp-sm : 700px;
 $bp-md : 1200px;
+
+/* Background images paths*/
+$home-bg1 : '../img/img001.jpeg';
+$home-bg2 : '../img/img002.jpeg';
+$home-bg3 : '../img/img003.jpeg';
