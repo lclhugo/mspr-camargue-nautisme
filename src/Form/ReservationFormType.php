@@ -19,8 +19,12 @@ class ReservationFormType extends AbstractType
             ->add('emailClient')
             ->add('equipment', EntityType::class, [
                 "class" => Equipment::class,
-                "choice_label" => "category.name"
+                "choice_label" => "rentalLocation.address"
             ])
+            // ->add('equipment', EntityType::class, [
+            //     "class" => Equipment::class,
+            //     "choice_label" => "category.name"
+            // ])
             ->add('dateLocation', DateType::class, [
                 'data' => new \DateTime(),
                 'widget' => 'single_text'
