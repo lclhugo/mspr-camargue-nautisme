@@ -1,31 +1,87 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Accueil{% endblock %}
 
 {% block body %}
 
-    <section class="hero">
-        <div class="carrousel">
-            <div class="carrousel-bloc"></div>
-            <div class="carrousel-bloc"></div>
-            <div class="carrousel-bloc"></div>
-        </div>
-    </section>
+	<section class="hero">
+		<div class="carrousel">
+			<section class="has-dflex-center">
+				<div class="lx-row">
+					<div class="lx-card carousel-container">
+						<div class="item fade">
+							<div class="image"><img src="{{ asset('img/kayakiste.jpeg') }}" alt="hero"></div>
+						</div>
+						<div class="item fade">
+							<div class="image"><img src="{{ asset('img/kayaks.png') }}" alt="hero"></div>
+							{# <div class="text is-text-left">
+                            <h1 class="title">This item has a title</h1>
+                            <p>This item has a caption, aligned to the left.</p>
+                        </div> #}
+						</div>
+						<div class="item fade">
+							<div class="image"><img src="{{ asset('img/paddle.jpeg') }}" alt="hero"></div>
+							{# <div class="text is-text-centered">
+                                <p><i class="fas fa-info-circle"></i>&nbsp;This item has a caption, aligned to the center </p>							                                   center.</p>
+                            </div> #}
+						</div>
+						<a class="prev has-dflex-center">
+							<i class="fas fa-angle-left"></i>
+						</a>
+						<a class="next has-dflex-center">
+							<i class="fas fa-angle-right"></i>
+						</a>
+					</div>
+				</div>
+			</section>
+			<div class="arrow-down">
+				<a href="#about">
+					<i class="fa-solid fa-arrow-down fa-bounce"></i>
+				</a>
+			</div>
 
-    <section class="about">
-        <div class="home-bloc"></div>
-        <div class="home-bloc"></div>
-        <div class="home-bloc"></div>
-    </section>
+			<section class="about" id="about">
 
-    <section class="avis-section">
-        <div class="avis-bloc"></div>
-    </section>
+				<div class="home-bloc">
+					<div class="bg1 d-flex-c-center">
+                        <div class="home-txt">
+                            <h3>Palavas-les-Flots</h3>
+							<div class="line"></div>
+							<a class='about-btn' href="#">En savoir plus</a>
+						</div>
+                    </div>
+				</div>
 
-    <section class="partners">
-    </section>
+                <div class="home-bloc">
+                    <div class="bg2 d-flex-c-center">
+                        <div class="home-txt">
+                            <h3>Equipements</h3>
+							<div class="line"></div>
+                            <a class='about-btn' href="#">En savoir plus</a>
+                        </div>
+                    </div>
+                </div>
 
-    <section class="contact">
-    </section>
+                <div class="home-bloc">
+                    <div class="bg3 d-flex-c-center">
+                        <div class="home-txt">
+                            <h3>Carnon</h3>
+							<div class="line"></div>
+							<a class='about-btn' href="#">En savoir plus</a>
+                        </div>
+                    </div>
+                </div>
 
-{% endblock %}
+                </section>
+
+
+
+				<section class="avis-section">
+					<div class="avis-bloc"></div>
+				</section>
+
+				<section class="partners"></section>
+
+				<section class="contact"></section>
+
+			{% endblock %}

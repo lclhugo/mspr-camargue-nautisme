@@ -1,10 +1,64 @@
 @use '../base/variables' as v;
 @use '../base/mixins' as m;
 
+.dropdown {
+  display: inline;
+}
+
+.nav, .dropdown-content {
+   display: none;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+
+  .nav-icons .fas {
+    position: relative;
+    top: 0.5rem;
+    left: 90%;
+    font-size : 1.5rem;
+    color: v.$white;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  .nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    text-align: center;
+    height: 100vh;
+    background-color: v.$primary;
+    width: 100%;
+  }
+
+  .booking {
+    font-weight: bold;
+  }
+
+  .nav-item {
+    margin: 1rem;
+    font-size: 1.5rem;
+    color: v.$white;
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(0.7);
+    }
+  }
+}
+
+.active {
+    display: block;
+}
+
+.d-none {
+  display: none!important;
+}
+
 /* media queries with mixins */
 @include m.for-desktop {
 }
-
-
-
-

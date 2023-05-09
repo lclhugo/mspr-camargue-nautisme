@@ -6,12 +6,13 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <script src="{{ asset('js/jquery-3.6.4.min.js') }}"></script>
     <script src="https://kit.fontawesome.com/49b5843b5a.js" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/script.js') }}"></script>
 
 </head>
 
 <body>
     <main>
-        {# {% include 'partials/navbar.html.twig' %} #}
+        {% include 'partials/navbar.html.twig' %}
         {% block body %} {% endblock %}
     </main>
 </body>
