@@ -13,6 +13,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+
 
 class EquipmentType extends AbstractType
 {
@@ -26,7 +28,12 @@ class EquipmentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('image')
+            ->add('image', FileType::class, [
+                'label' => 'Image',
+                'required' => false,
+                'mapped' => false,
+                'attr' => ['class' => 'form-control'],
+            ])
             ->add('price')
             ->add('description')
             ->add('category', ChoiceType::class, [
@@ -46,7 +53,7 @@ class EquipmentType extends AbstractType
                     return $value->getName();
                 }
             ])
-         
+
             ->add('rentalLocation', ChoiceType::class, [
                 'choices' => [
                     'Choisis un point de location' => null,
@@ -64,7 +71,6 @@ class EquipmentType extends AbstractType
                     return $value->getAddress();
                 }
             ]);
-        
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -78,7 +84,7 @@ class EquipmentType extends AbstractType
     {
         $choices = [];
 
-        $categoryChoices = $this->entityManager 
+        $categoryChoices = $this->entityManager
             ->getRepository(Category::class)
             ->findBy([], ['name' => 'ASC']);
 

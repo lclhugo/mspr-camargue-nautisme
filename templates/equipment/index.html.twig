@@ -19,7 +19,7 @@
         {% for equipment in equipment %}
             <tr>
                 <td>{{ equipment.id }}</td>
-                <td>{{ equipment.image }}</td>
+                <td> <img src="{{ asset('uploads/' ~ equipment.image) }}" alt="Equipment image" width="100"></td>
                 <td>{{ equipment.price }}</td>
                 <td>{{ equipment.description }}</td>
                 <td>
