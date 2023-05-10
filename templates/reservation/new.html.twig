@@ -8,4 +8,41 @@
     {{ include('reservation/_form.html.twig') }}
 
     <a href="{{ path('app_reservation_index') }}">back to list</a>
+
+
+<script>
+   let date = document.getElementById('reservation_form_dateLocation');
+   let locationField = document.getElementById('reservation_form_location');
+
+   let dateValue = new Date(date.value );
+   let locationFieldValue = locationField.options[locationField.selectedIndex].value;
+
+
+   function refreshForm() {
+       let xhr = new XMLHttpRequest();
+       dateValue = dateValue.toISOString().slice(0, 10);
+       xhr.open('GET', '/reservation/new/' + dateValue + '/' + locationFieldValue, true);
+       console.log('/reservation/new/' + dateValue + '/' + locationFieldValue)
+       xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+       xhr.onreadystatechange = function () {
+           if (xhr.readyState === 4 && xhr.status === 200) {
+               let form = document.getElementById('reservation_form');
+               form.innerHTML = xhr.responseText;
+           }
+       };
+       xhr.send();
+   }
+
+   locationField.addEventListener('change', function () {
+       locationFieldValue = locationField.options[locationField.selectedIndex].value;
+       refreshForm();
+   });
+
+   //with ajax refresh the form when the date or locationField changes
+   date.addEventListener('change', function () {
+       dateValue = new Date(date.value);
+       refreshForm();
+   });
+</script>
+
 {% endblock %}
