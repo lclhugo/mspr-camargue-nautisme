@@ -48,6 +48,7 @@ class EquipmentController extends AbstractController
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
+                    print_r($e);
                 }
 
                 $equipment->setImage($newFilename);
@@ -73,12 +74,34 @@ class EquipmentController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_equipment_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Equipment $equipment, EquipmentRepository $equipmentRepository): Response
+    public function edit(Request $request, Equipment $equipment, EquipmentRepository $equipmentRepository, SluggerInterface $slugger): Response
     {
+        // $equipment = new Equipment();
         $form = $this->createForm(EquipmentType::class, $equipment);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $imageFile */
+            $imageFile = $form->get('image')->getData();
+
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+
+                try {
+                    $imageFile->move(
+                        $this->getParameter('upload_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                    print_r($e);
+                }
+
+                $equipment->setImage($newFilename);
+            }
+
             $equipmentRepository->save($equipment, true);
 
             return $this->redirectToRoute('app_equipment_index', [], Response::HTTP_SEE_OTHER);

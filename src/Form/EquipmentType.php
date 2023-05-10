@@ -14,7 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class EquipmentType extends AbstractType
 {
@@ -34,9 +34,12 @@ class EquipmentType extends AbstractType
                 'mapped' => false,
                 'attr' => ['class' => 'form-control'],
             ])
-            ->add('price')
-            ->add('description')
+            ->add('price', IntegerType::class, [
+                'label' => 'Prix',
+            ])
+            ->add('description', TextType::class)
             ->add('category', ChoiceType::class, [
+                'label' => 'Categorie',
                 'choices' => [
                     'Choisir son type dequipement' => null,
                 ],
@@ -55,6 +58,7 @@ class EquipmentType extends AbstractType
             ])
 
             ->add('rentalLocation', ChoiceType::class, [
+                'label' => 'Points de location',
                 'choices' => [
                     'Choisis un point de location' => null,
                 ],
