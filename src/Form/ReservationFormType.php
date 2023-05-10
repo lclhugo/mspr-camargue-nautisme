@@ -29,39 +29,16 @@ class ReservationFormType extends AbstractType
 
         $ReservationRepository = $this->reservationRepository;
         $builder
-            ->add('nameClient', TextType::class, [
-                'label' => 'Nom *',
-                'constraints' => [
-                    new NotBlank(),
-                ],
-            ])
-            ->add('emailClient', TextType::class, [
-                'label' => 'Email *',
-                'constraints' => [
-                    new NotBlank(),
-                ],
-            ])
-            ->add('location', EntityType::class, [
-                "class" => RentalLocation::class,
-                "choice_label" => "address"
-            ])
-            //have a default value = today
-            ->add('dateLocation', DateType::class, [
-                'data' => new \DateTime(),
-                'widget' => 'single_text',
-            ])
-            ->add('equipment', EntityType::class, [
-                "class" => Equipment::class,
-                "choice_label" => "category.name",
-                "query_builder" => function (EquipmentRepository $equipmentRepository) use ($options) {
-                    $qb = $equipmentRepository->createQueryBuilder('e');
-                    $qb->leftJoin('e.reservations', 'r', 'WITH', 'r.dateLocation = :dateLocation');
-                    $qb->andWhere('r.id IS NULL');
-                    $qb->setParameter('dateLocation', $options['data']->getDateLocation());
-                    return $qb;
-                },
-            ]);
-    }
+            ->add("emailClient", null)
+            ->add("nameClient", null)
+            ->add("dateLocation", null)
+            ->add("equipment", null)
+            ->add("Location", null)
+            ->add("dateReservation", null);
+//          ->add('createdAt', null)
+
+        }
+
 
     public function configureOptions(OptionsResolver $resolver): void
     {

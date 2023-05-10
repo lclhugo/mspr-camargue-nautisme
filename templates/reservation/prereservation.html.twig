@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Reservation{% endblock %}
+
+{% block body %}
+    <h1>Create new Reservation</h1>
+    <form method="post" action="{{ path('prereservation_save') }}">
+        <label for="location-date">Jour de réservation:</label>
+        <input type="date" id="location-date" name="location-date"
+               value="<?php new DateTime('now') ?>"
+               min="<?php new DateTime('now') ?>" max="<?php new DateTime('now') ?>"><br>
+
+        <label for="location">Lieu de location:</label>
+        <select id="location" name="location">
+            {% for location in locations %}
+                <option value="{{ location.id }}">{{ location.address }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Réserver</button>
+    </form>
+
+{% endblock %}

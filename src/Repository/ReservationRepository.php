@@ -87,4 +87,26 @@ class ReservationRepository extends ServiceEntityRepository
         // returns an array of Product objects
         return $query->getResult();
     }
+
+    public function findAvailableEquipmentsByDateAndLocation($getDate, $getId)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT e
+            FROM App\Entity\Equipment e
+            WHERE e.rentalLocation = :location
+            AND e.id NOT IN (
+                SELECT r.equipment
+                FROM App\Entity\Reservation r
+                WHERE r.dateLocation = :dateLocation
+            )
+            ORDER BY e.name ASC'
+        )->setParameter('location', $getId)
+
+            ->setParameter('dateLocation', $getDate);
+
+        // returns an array of Product objects
+        return $query->getResult();
+    }
 }

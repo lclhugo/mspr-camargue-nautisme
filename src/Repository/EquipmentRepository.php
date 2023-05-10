@@ -63,4 +63,24 @@ class EquipmentRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function findAvailableEquipmentsByDateAndLocation($date, ?int $getId)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT e
+            FROM App\Entity\Equipment e
+            WHERE e.id NOT IN (
+                SELECT e2.id
+                FROM App\Entity\Equipment e2
+                JOIN e2.reservations r
+                WHERE r.dateLocation = :date
+                AND r.Location = :location
+            )'
+        )->setParameter('date', $date)
+            ->setParameter('location', $getId);
+
+        // returns an array of Product objects
+        return $query->getResult();
+    }
 }

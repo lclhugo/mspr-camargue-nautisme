@@ -7,8 +7,10 @@ use App\Entity\RentalLocation;
 use App\Entity\Reservation;
 use App\Form\ReservationFormType;
 use App\Repository\EquipmentRepository;
+use App\Repository\RentalLocationRepository;
 use App\Repository\ReservationRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,49 +27,73 @@ class ReservationController extends AbstractController
         ]);
     }
 
-    //create a new reservation with a date
-    #[Route('/new/', name: 'app_reservation_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ReservationRepository $reservationRepository): Response
+    //this route is used to show a form with only a date and a location,
+    #[Route('/new', name: 'prereservation', methods: ['GET', 'POST'])]
+    public function prereservation(RentalLocationRepository $rentalLocationRepository): Response
     {
-        $reservation = new Reservation();
-        $form = $this->createForm(ReservationFormType::class, $reservation);
+        //get all the locations and send them to the view
+        $locations = $rentalLocationRepository->findAll();
+        return $this->render('reservation/prereservation.html.twig', [
+            'locations' => $locations,
+        ]);
+
+    }
+    //show a form with only a date and a location,
+    #[Route('/', name: 'prereservation_save', methods: ['GET', 'POST'])]
+    public function create(Request $request, ReservationRepository $reservationRepository): Response
+    {
+        $date = $request->request->get('date');
+        $id = $request->request->get('location');
+        $formattedDate = date('Y-m-d', strtotime($date));
+
+        return $this->redirectToRoute('app_reservation_new', ['date' => $formattedDate, 'id' => $id]);
+    }
+
+    #[Route('/new/{date}/{id}', name: 'app_reservation_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, $date, $id, ReservationRepository $reservationRepository, EquipmentRepository $equipmentRepository, RentalLocationRepository $rentalLocationRepository): Response
+    {
+        //get the location and the date from the route
+        $location = $rentalLocationRepository->find($id);
+
+        //get all the equipments that are not reserved for the date and location
+        $equipments = $equipmentRepository->findAvailableEquipmentsByDateAndLocation($date, $location->getId());
+
+        //create the form
+        $form = $this->createForm(ReservationFormType::class, null, ['equipment' => $equipments, 'Location' => $location]);
         $form->handleRequest($request);
 
+        //if the form is submitted and valid
         if ($form->isSubmitted() && $form->isValid()) {
+            //get the reservation from the form
+            $reservation = $form->getData();
+
+            //get the equipments from the form
+            $equipments = $form->get('equipment')->getData();
+
+            //set the location
+            $reservation->setRentalLocation($location);
+
+            //set the date
+            $reservation->setDate(new \DateTime($date));
+
+            //save the reservation
             $reservationRepository->save($reservation, true);
 
+            //save the equipments
+            foreach ($equipments as $equipment) {
+                $equipment->addReservation($reservation);
+                $equipmentRepository->save($equipment, true);
+            }
+
+            //redirect to the index
             return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('reservation/new.html.twig', [
-            'reservation' => $reservation,
+            'reservation' => null,
             'form' => $form,
         ]);
     }
-
-    //the route is like this : /reservation/new/2021-05-05/1
-    //the date is 2021-05-05 and the id of the location is 1
-    #[Route('/new/{date}/{id}', name: 'app_reservation_new_date', methods: ['GET', 'POST'])]
-    public function newDate(string $date, int $id, Request $request, ReservationRepository $reservationRepository): Response
-    {
-$reservation = new Reservation();
-        $form = $this->createForm(ReservationFormType::class, $reservation);
-        $form->handleRequest($request);
-
-        $reservation->setDateLocation(new \DateTime($date));
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $reservationRepository->save($reservation, true);
-
-            return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('reservation/new.html.twig', [
-            'reservation' => $reservation,
-            'form' => $form,
-        ]);
-    }
-
 
 
     #[Route('/{id}', name: 'app_reservation_show', methods: ['GET'])]
