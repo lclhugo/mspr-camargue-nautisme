@@ -39,6 +39,9 @@ class RentalLocation
     #[ORM\OneToMany(mappedBy: 'rentalLocation', targetEntity: Equipment::class)]
     private Collection $equipments;
 
+    #[ORM\OneToOne(mappedBy: 'Location', cascade: ['persist', 'remove'])]
+    private ?Reservation $reservation = null;
+
     public function __construct()
     {
         $this->equipments = new ArrayCollection();
@@ -159,6 +162,23 @@ class RentalLocation
                 $equipment->setRentalLocation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getReservation(): ?Reservation
+    {
+        return $this->reservation;
+    }
+
+    public function setReservation(Reservation $reservation): self
+    {
+        // set the owning side of the relation if necessary
+        if ($reservation->getLocation() !== $this) {
+            $reservation->setLocation($this);
+        }
+
+        $this->reservation = $reservation;
 
         return $this;
     }

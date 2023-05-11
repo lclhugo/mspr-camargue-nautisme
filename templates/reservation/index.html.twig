@@ -1,41 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Reservation index{% endblock %}
+{% block title %}Vos Réservations{% endblock %}
 
 {% block body %}
-    <h1>Reservation index</h1>
+    <h1>Vos Réservations</h1>
+    <main>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>EmailClient</th>
+                    <th>DateLocation</th>
+                    <th>NameClient</th>
+                    <th>CreatedAt</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for reservation in reservations %}
+                <tr>
+                    <td>{{ reservation.emailClient }}</td>
+                    <td>{{ reservation.dateLocation ? reservation.dateLocation|date('Y-m-d') : '' }}</td>
+                    <td>{{ reservation.nameClient }}</td>
+                    <td>{{ reservation.createdAt ? reservation.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>
+                        <a class="view-btn" href="{{ path('app_reservation_show', {'id': reservation.id}) }}">Détails</a>
+                        <a class="edit-btn" href="{{ path('app_reservation_edit', {'id': reservation.id}) }}">Modifier</a>
+                        <a class="delete-btn" href="{{ path('app_reservation_delete', {'id': reservation.id}) }}">Annuler</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>EmailClient</th>
-                <th>DateLocation</th>
-                <th>NameClient</th>
-                <th>CreatedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for reservation in reservations %}
-            <tr>
-                <td>{{ reservation.id }}</td>
-                <td>{{ reservation.emailClient }}</td>
-                <td>{{ reservation.dateLocation ? reservation.dateLocation|date('Y-m-d') : '' }}</td>
-                <td>{{ reservation.nameClient }}</td>
-                <td>{{ reservation.createdAt ? reservation.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_reservation_show', {'id': reservation.id}) }}">show</a>
-                    <a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <a class="reservation-btn" href="{{ path('app_reservation_new') }}">{{ button_label|default('Réserver') }}</a>
+    </main>
 
-    <a href="{{ path('app_reservation_new') }}">Create new</a>
 {% endblock %}
