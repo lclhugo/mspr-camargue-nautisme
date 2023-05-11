@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function Sodium\add;
 
 #[Route('/reservation')]
 class ReservationController extends AbstractController
@@ -42,7 +43,7 @@ class ReservationController extends AbstractController
     #[Route('/', name: 'prereservation_save', methods: ['GET', 'POST'])]
     public function create(Request $request, ReservationRepository $reservationRepository): Response
     {
-        $date = $request->request->get('date');
+        $date = $request->request->get('location-date');
         $id = $request->request->get('location');
         $formattedDate = date('Y-m-d', strtotime($date));
 
@@ -50,49 +51,39 @@ class ReservationController extends AbstractController
     }
 
     #[Route('/new/{date}/{id}', name: 'app_reservation_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, $date, $id, ReservationRepository $reservationRepository, EquipmentRepository $equipmentRepository, RentalLocationRepository $rentalLocationRepository): Response
+    public function new($date, $id, Request $request,  ReservationRepository $reservationRepository, EquipmentRepository $equipmentRepository, RentalLocationRepository $rentalLocationRepository): Response
     {
         //get the location and the date from the route
         $location = $rentalLocationRepository->find($id);
+        $dateConverted = new \DateTime($date);
 
         //get all the equipments that are not reserved for the date and location
-        $equipments = $equipmentRepository->findAvailableEquipmentsByDateAndLocation($date, $location->getId());
+//        $equipments = $equipmentRepository->findAvailableEquipmentsByDateAndLocation($dateConverted, $location->getId());
+        $reservation = new Reservation();
+        $reservation->setLocation($location);
+        $reservation->setDateLocation($dateConverted);
+
 
         //create the form
-        $form = $this->createForm(ReservationFormType::class, null, ['equipment' => $equipments, 'Location' => $location]);
+        $form = $this->createForm(ReservationFormType::class, $reservation);
         $form->handleRequest($request);
 
         //if the form is submitted and valid
         if ($form->isSubmitted() && $form->isValid()) {
-            //get the reservation from the form
-            $reservation = $form->getData();
-
-            //get the equipments from the form
-            $equipments = $form->get('equipment')->getData();
-
-            //set the location
-            $reservation->setRentalLocation($location);
-
-            //set the date
-            $reservation->setDate(new \DateTime($date));
-
-            //save the reservation
             $reservationRepository->save($reservation, true);
-
-            //save the equipments
-            foreach ($equipments as $equipment) {
-                $equipment->addReservation($reservation);
-                $equipmentRepository->save($equipment, true);
-            }
 
             //redirect to the index
             return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        //render the view
         return $this->renderForm('reservation/new.html.twig', [
-            'reservation' => null,
-            'form' => $form,
-        ]);
+                    'reservation' => $reservation,
+                    'form' => $form,
+                    'date' => $date,
+                    'id' => $id,
+                ]);
+
     }
 
 
@@ -131,5 +122,4 @@ class ReservationController extends AbstractController
 
         return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
     }
-
 }

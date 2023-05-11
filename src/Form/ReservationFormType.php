@@ -26,18 +26,25 @@ class ReservationFormType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-
+        $reservation = $builder->getData();
         $ReservationRepository = $this->reservationRepository;
         $builder
-            ->add("emailClient", null)
-            ->add("nameClient", null)
-            ->add("dateLocation", null)
-            ->add("equipment", null)
-            ->add("Location", null)
-            ->add("dateReservation", null);
-//          ->add('createdAt', null)
+            ->add("emailClient")
+            ->add("nameClient")
+//            ->add("dateLocation")
+            //use the $equipment that is an array of equipment that are not reserved for the date and location as options
+            ->add("equipment", EntityType::class, [
+                'class' => Equipment::class,
+                'choices' => $ReservationRepository->findAvailableEquipmentsByDateAndLocation($reservation->getDateLocation(), $reservation->getLocation()),
+                'choice_label' => 'category.name',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please select one equipment',
+                    ]),
+                ],
+            ]);
+    }
 
-        }
 
 
     public function configureOptions(OptionsResolver $resolver): void
