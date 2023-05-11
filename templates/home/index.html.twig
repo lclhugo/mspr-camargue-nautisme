@@ -10,20 +10,24 @@
 				<div class="lx-row">
 					<div class="lx-card carousel-container">
 						<div class="item fade">
-							<div class="image"><img src="{{ asset('img/kayakiste.jpeg') }}" alt="hero"></div>
+							<div class="video"><video autoplay muted loop>
+									<source src="{{ asset('img/video_kayak.webm') }}" type="video/webm"/>
+								</video>
+							</div>
+							{# <div class="text is-text-right">
+							<h1 class="title">This item has a title</h1>
+							<p>This item has a caption, aligned to the right.</p>
+						</div> #}
 						</div>
 						<div class="item fade">
 							<div class="image"><img src="{{ asset('img/kayaks.png') }}" alt="hero"></div>
-							{# <div class="text is-text-left">
-                            <h1 class="title">This item has a title</h1>
-                            <p>This item has a caption, aligned to the left.</p>
-                        </div> #}
+{#							 <div class="text is-text-left">#}
+{#                            <h1 class="title">This item has a title</h1>#}
+{#                            <p>This item has a caption, aligned to the left.</p>#}
+{#                        </div> #}
 						</div>
 						<div class="item fade">
 							<div class="image"><img src="{{ asset('img/paddle.jpeg') }}" alt="hero"></div>
-							{# <div class="text is-text-centered">
-                                <p><i class="fas fa-info-circle"></i>&nbsp;This item has a caption, aligned to the center </p>							                                   center.</p>
-                            </div> #}
 						</div>
 						<a class="prev has-dflex-center">
 							<i class="fas fa-angle-left"></i>
@@ -57,7 +61,7 @@
                         <div class="home-txt">
                             <h3>Equipements</h3>
 							<div class="line"></div>
-                            <a class='about-btn' href="#">En savoir plus</a>
+                            <a class='about-btn' href="{{ path('app_equipment_index') }}">En savoir plus</a>
                         </div>
                     </div>
                 </div>

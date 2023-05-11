@@ -3,11 +3,14 @@
 {% block title %}Modifier Equipment{% endblock %}
 
 {% block body %}
-    <h1>Modifier Equipment</h1>
+    <div class="equipment">
 
-    {{ include('equipment/_form.html.twig', {'button_label': 'Update'}) }}
+        <h1>Modifier Equipment</h1>
 
-    <a class="view-btn" href="{{ path('app_equipment_index') }}">Retour</a>
+        {{ include('equipment/_form.html.twig', {'button_label': 'Update'}) }}
+
+        <a class="view-btn" href="{{ path('app_equipment_index') }}">Retour</a>
+    </div>
 
     {{ include('equipment/_delete_form.html.twig') }}
 {% endblock %}

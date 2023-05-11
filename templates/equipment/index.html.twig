@@ -3,7 +3,7 @@
 {% block title %}Nos Equipments{% endblock %}
 
 {% block body %}
-<main>
+<main class="equipment">
     <h1>Tous nos équipments</h1>
 
         {% set newArray = [] %}
@@ -17,7 +17,7 @@
                         <p>{{ equipment.description }}</p>
                         <p class="price">{{ equipment.price }}€</p>
 
-                        <a class="reservation-btn" href="{{ path('app_reservation_new') }}">Réserver</a>
+                        <a class="reservation-btn" href="{{ path('prereservation') }}">Réserver</a>
 
                         <div>
                             <a class="view-btn" href="{{ path('app_equipment_show', {'id': equipment.id}) }}">Détails</a>

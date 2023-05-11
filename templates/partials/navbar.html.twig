@@ -24,13 +24,13 @@
                             <li><a class="nav-item" href="#">Carnon</a></li>
                         </ul>
                     </li>
-                    <li><a class="nav-item" href="#">Equipement</a></li>
-                    <li><a class="nav-item" href="#">Contact</a></li>
+                    <li><a class="nav-item" href="{{ path('app_equipment_index') }}">Equipement</a></li>
+{#                    <li><a class="nav-item" href="#">Contact</a></li>#}
                 </ul>
             </div>
 
             <div class="navbar-booking">
-                    <a class="nav-item booking" href="#">Réservation</a>
+                    <a class="nav-item booking" href="{{ path('prereservation') }}">Réservation</a>
             </div>
         </div>
     </nav>
