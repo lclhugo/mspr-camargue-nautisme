@@ -20,7 +20,7 @@
     top: 0.5rem;
     left: 90%;
     font-size : 1.5rem;
-    color: v.$white;
+    color: v.$primary;
     cursor: pointer;
     z-index: 2;
   }
@@ -31,7 +31,7 @@
     right: 0;
     text-align: center;
     height: 100vh;
-    background-color: v.$primary;
+    background-color: v.$secondary;
     width: 100%;
   }
 
@@ -41,7 +41,7 @@
 
   .nav-item {
     margin: 1rem;
-    font-size: 1.5rem;
+    font-size: 3rem;
     color: v.$white;
     cursor: pointer;
 
@@ -61,4 +61,8 @@
 
 /* media queries with mixins */
 @include m.for-desktop {
-}
+  .navbar .nav-icons .fas {
+    font-size: 3rem;
+  }
+
+  }
