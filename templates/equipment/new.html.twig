@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un équipment{% endblock %}
+
+{% block body %}
+    <h1>Créer un nouvelle équipment</h1>
+
+    {{ include('equipment/_form.html.twig') }}
+
+    <a class="view-btn" href="{{ path('app_equipment_index') }}">Retour</a>
+{% endblock %}
