@@ -14,21 +14,12 @@
             {{ form_widget(form.emailClient, {'attr': {'class': 'input'}}) }}
         </div>
         <div class="row">
-            {{ form_errors(form.location) }}
-            {{ form_label(form.location) }}
-            {{ form_widget(form.location, {'attr': {'class': 'input'}}) }}
-        </div>
-        <div class="row">
-            {{ form_errors(form.dateLocation) }}
-            {{ form_label(form.dateLocation) }}
-            {{ form_widget(form.dateLocation, {'attr': {'class': 'input'}}) }}
-        </div>
-        <div class="row">
             {{ form_errors(form.equipment) }}
             {{ form_label(form.equipment) }}
             {{ form_widget(form.equipment, {'attr': {'class': 'input'}}) }}
         </div>
-            
+
         <button class="reservation-btn">{{ button_label|default('Réserver') }}</button>
     </section>
 {{ form_end(form) }}
+
