@@ -21,13 +21,16 @@
 
 .view-btn{
   background-color: v.$primary;
+  font-size: 1.3rem;
 }
 
 .edit-btn {
-  background-color: yellow;
+  background-color: rgb(203, 203, 0);
+  font-size: 1.3rem;
 }
 .delete-btn {
   background-color: red;
+  font-size: 1.3rem;
 }
 
 @include m.for-tablet {}

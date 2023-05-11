@@ -4,4 +4,15 @@
 .table{
     width: 100%;
     padding: 5%;
+    text-align: left;
+}
+
+.btn-flex{
+    display: flex;
+    justify-content: start;
+    gap: 5%;
+}
+
+.m-left{
+    margin-left: 2%;
 }
