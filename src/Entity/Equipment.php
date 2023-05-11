@@ -135,4 +135,9 @@ class Equipment
 
         return $this;
     }
+
+    public function add(mixed $equipments)
+    {
+
+    }
 }

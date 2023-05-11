@@ -39,52 +39,30 @@ class ReservationRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Reservation[] Returns an array of Reservation objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('r.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Reservation
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 
 
-//method that return a list of available equipments at a given location for a given date
-    public function findAvailableEquipments($location, $dateLocation): array
+    public function findAvailableEquipmentsByDateAndLocation($date, $getId)
     {
         $entityManager = $this->getEntityManager();
 
         $query = $entityManager->createQuery(
             'SELECT e
             FROM App\Entity\Equipment e
-            WHERE e.rentalLocation = :location
-            AND e.id NOT IN (
-                SELECT r.equipment
-                FROM App\Entity\Reservation r
-                WHERE r.dateLocation = :dateLocation
-            )
-            ORDER BY e.name ASC'
-        )->setParameter('location', $location)
-
-            ->setParameter('dateLocation', $dateLocation);
+            WHERE e.id NOT IN (
+                SELECT e2.id
+                FROM App\Entity\Equipment e2
+                JOIN e2.reservations r
+                WHERE r.dateLocation = :date
+                AND r.Location = :location
+            )'
+        )->setParameter('date', $date)
+            ->setParameter('location', $getId);
 
         // returns an array of Product objects
         return $query->getResult();
     }
+
+
+
+
 }

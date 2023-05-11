@@ -26,42 +26,26 @@ class ReservationFormType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-
+        $reservation = $builder->getData();
         $ReservationRepository = $this->reservationRepository;
         $builder
-            ->add('nameClient', TextType::class, [
-                'label' => 'Nom *',
+            ->add("emailClient")
+            ->add("nameClient")
+//            ->add("dateLocation")
+            //use the $equipment that is an array of equipment that are not reserved for the date and location as options
+            ->add("equipment", EntityType::class, [
+                'class' => Equipment::class,
+                'choices' => $ReservationRepository->findAvailableEquipmentsByDateAndLocation($reservation->getDateLocation(), $reservation->getLocation()),
+                'choice_label' => 'category.name',
                 'constraints' => [
-                    new NotBlank(),
+                    new NotBlank([
+                        'message' => 'Please select one equipment',
+                    ]),
                 ],
-            ])
-            ->add('emailClient', TextType::class, [
-                'label' => 'Email *',
-                'constraints' => [
-                    new NotBlank(),
-                ],
-            ])
-            ->add('location', EntityType::class, [
-                "class" => RentalLocation::class,
-                "choice_label" => "address"
-            ])
-            //have a default value = today
-            ->add('dateLocation', DateType::class, [
-                'data' => new \DateTime(),
-                'widget' => 'single_text',
-            ])
-            ->add('equipment', EntityType::class, [
-                "class" => Equipment::class,
-                "choice_label" => "category.name",
-                "query_builder" => function (EquipmentRepository $equipmentRepository) use ($options) {
-                    $qb = $equipmentRepository->createQueryBuilder('e');
-                    $qb->leftJoin('e.reservations', 'r', 'WITH', 'r.dateLocation = :dateLocation');
-                    $qb->andWhere('r.id IS NULL');
-                    $qb->setParameter('dateLocation', $options['data']->getDateLocation());
-                    return $qb;
-                },
             ]);
     }
+
+
 
     public function configureOptions(OptionsResolver $resolver): void
     {

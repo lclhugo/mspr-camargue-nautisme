@@ -31,7 +31,7 @@ class Reservation
     #[ORM\JoinColumn(nullable: false)]
     private ?Equipment $equipment = null;
 
-    #[ORM\OneToOne(inversedBy: 'reservation', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'reservations')]
     #[ORM\JoinColumn(nullable: false)]
     private ?RentalLocation $Location = null;
 
@@ -118,5 +118,6 @@ class Reservation
 
         return $this;
     }
+
 
 }
