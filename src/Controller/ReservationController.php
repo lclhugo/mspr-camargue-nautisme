@@ -2,9 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Equipment;
+use App\Entity\RentalLocation;
 use App\Entity\Reservation;
 use App\Form\ReservationFormType;
+use App\Repository\EquipmentRepository;
 use App\Repository\ReservationRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +25,8 @@ class ReservationController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_reservation_new', methods: ['GET', 'POST'])]
+    //create a new reservation with a date
+    #[Route('/new/', name: 'app_reservation_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ReservationRepository $reservationRepository): Response
     {
         $reservation = new Reservation();
@@ -39,6 +44,31 @@ class ReservationController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    //the route is like this : /reservation/new/2021-05-05/1
+    //the date is 2021-05-05 and the id of the location is 1
+    #[Route('/new/{date}/{id}', name: 'app_reservation_new_date', methods: ['GET', 'POST'])]
+    public function newDate(string $date, int $id, Request $request, ReservationRepository $reservationRepository): Response
+    {
+$reservation = new Reservation();
+        $form = $this->createForm(ReservationFormType::class, $reservation);
+        $form->handleRequest($request);
+
+        $reservation->setDateLocation(new \DateTime($date));
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $reservationRepository->save($reservation, true);
+
+            return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('reservation/new.html.twig', [
+            'reservation' => $reservation,
+            'form' => $form,
+        ]);
+    }
+
+
 
     #[Route('/{id}', name: 'app_reservation_show', methods: ['GET'])]
     public function show(Reservation $reservation): Response
@@ -75,4 +105,5 @@ class ReservationController extends AbstractController
 
         return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
     }
+
 }

@@ -63,4 +63,28 @@ class ReservationRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+
+//method that return a list of available equipments at a given location for a given date
+    public function findAvailableEquipments($location, $dateLocation): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT e
+            FROM App\Entity\Equipment e
+            WHERE e.rentalLocation = :location
+            AND e.id NOT IN (
+                SELECT r.equipment
+                FROM App\Entity\Reservation r
+                WHERE r.dateLocation = :dateLocation
+            )
+            ORDER BY e.name ASC'
+        )->setParameter('location', $location)
+
+            ->setParameter('dateLocation', $dateLocation);
+
+        // returns an array of Product objects
+        return $query->getResult();
+    }
 }

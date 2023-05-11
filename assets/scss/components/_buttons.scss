@@ -8,21 +8,40 @@
   border-radius: 1rem;
 }
 
-@include m.for-tablet {
+.reservation-btn, .create-btn, .edit-btn, .delete-btn, .view-btn {
+  display: block;
+  color: v.$white;
+  background-color: v.$tertiary;
+  border: none;
+  width: fit-content;
+  border-radius: 1rem;
+  padding: 1% 2% 1% 2%;
+  font-size: 2rem;
 }
+
+.view-btn{
+  background-color: v.$primary;
+}
+
+.edit-btn {
+  background-color: yellow;
+}
+.delete-btn {
+  background-color: red;
+}
+
+@include m.for-tablet {}
 
 @include m.for-desktop {
   .about-btn {
     border: none;
-    }
+  }
 
   .home-bloc:hover .about-btn {
     border: 2px solid v.$white;
   }
 
+  .reservation-btn {
+    font-size: 1.5rem;
+  }
 }
-
-
-
-
-

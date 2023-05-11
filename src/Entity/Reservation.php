@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Reservation
 {
     #[ORM\Id]
@@ -29,6 +30,11 @@ class Reservation
     #[ORM\ManyToOne(inversedBy: 'reservations')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Equipment $equipment = null;
+
+    #[ORM\OneToOne(inversedBy: 'reservation', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?RentalLocation $Location = null;
+
 
     public function getId(): ?int
     {
@@ -94,4 +100,23 @@ class Reservation
 
         return $this;
     }
+
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
+
+    public function getLocation(): ?RentalLocation
+    {
+        return $this->Location;
+    }
+
+    public function setLocation(RentalLocation $Location): self
+    {
+        $this->Location = $Location;
+
+        return $this;
+    }
+
 }
