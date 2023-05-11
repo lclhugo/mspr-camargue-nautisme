@@ -1,0 +1,34 @@
+{{ form_start(form) }}
+    <section class="form-errors">
+        {{ form_errors(form) }}
+    </section>
+    <section class="form d-flex-c-center">
+        <div class="row">
+            {{ form_errors(form.image) }}
+            {{ form_label(form.image) }}
+            {{ form_widget(form.image, {'attr': {'class': 'input'}}) }}
+        </div>
+        <div class="row">
+            {{ form_errors(form.price) }}
+            {{ form_label(form.price) }}
+            {{ form_widget(form.price, {'attr': {'class': 'input'}}) }}
+        </div>
+        <div class="row">
+            {{ form_errors(form.description) }}
+            {{ form_label(form.description) }}
+            {{ form_widget(form.description, {'attr': {'class': 'input'}}) }}
+        </div>
+        <div class="row">
+            {{ form_errors(form.category) }}
+            {{ form_label(form.category) }}
+            {{ form_widget(form.category, {'attr': {'class': 'input'}}) }}
+        </div>
+        <div class="row">
+            {{ form_errors(form.rentalLocation) }}
+            {{ form_label(form.rentalLocation) }}
+            {{ form_widget(form.rentalLocation, {'attr': {'class': 'input'}}) }}
+        </div>
+        
+        <button class="create-btn">{{ button_label|default('Créer') }}</button>
+    </section>
+{{ form_end(form) }}
