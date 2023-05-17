@@ -19,16 +19,21 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class ReservationFormType extends AbstractType
 {
     private $reservationRepository;
+    private $equipmentRepository;
 
-    public function __construct(ReservationRepository $reservationRepository)
+    public function __construct(ReservationRepository $reservationRepository, EquipmentRepository $equipmentRepository)
     {
         $this->reservationRepository = $reservationRepository;
+        $this->equipmentRepository = $equipmentRepository;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $reservation = $builder->getData();
+        // dd($builder->getData());
+        $reservation = $builder->getData()[0];
+        $equipment = $builder->getData()[1];
         $ReservationRepository = $this->reservationRepository;
+        $EquipmentRepository = $this->equipmentRepository;
         $builder
             ->add("emailClient", EmailType::class, [
                 'label' => 'Email'
@@ -41,7 +46,7 @@ class ReservationFormType extends AbstractType
             ->add("equipment", EntityType::class, [
                 'label' => 'Equipement',
                 'class' => Equipment::class,
-                'choices' => $ReservationRepository->findAvailableEquipmentsByDateAndLocation($reservation->getDateLocation(), $reservation->getLocation()),
+                'choices' => $ReservationRepository->findAvailableEquipmentsByDateAndLocation($reservation->getDateLocation(), $equipment->getRentalLocation()),
                 'choice_label' => 'category.name',
                 'constraints' => [
                     new NotBlank([
