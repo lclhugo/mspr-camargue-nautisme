@@ -10,6 +10,12 @@
         overflow:hidden;
     }
 
+    .video {
+        width: 100%;
+        object-fit: cover;
+        //center horizontally
+    }
+
     .bg1 {
         @include m.background(v.$home-bg1);
         height: 100%;

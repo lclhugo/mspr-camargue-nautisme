@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos Equipments{% endblock %}
+
+{% block body %}
+<main class="equipment">
+    <h1>Tous nos équipments</h1>
+
+        {% set newArray = [] %}
+
+        {% for equipment in equipment %}
+            {% if equipment.category.name not in newArray %}
+                <section class="card">
+                    <img class="img-equipment" src="{{ asset('uploads/' ~ equipment.image) }}" alt="{{ equipment.category.name }}">
+                    <div class="text-body">
+                        <h2>{{ equipment.category.name }}</h2>
+                        <p>{{ equipment.description }}</p>
+                        <p class="price">{{ equipment.price }}€</p>
+
+                        <a class="reservation-btn" href="{{ path('prereservation') }}">Réserver</a>
+
+                        <div class="btn-flex">
+                            {% if app.user %}
+                            <a class="edit-btn" href="{{ path('app_equipment_edit', {'id': equipment.id}) }}">Modifier</a>
+                            {{ include('equipment/_delete_form.html.twig') }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </section>
+
+                {% set newArray = newArray|merge([equipment.category.name]) %}
+            {% endif %}
+        {% endfor %}
+    {% if app.user %}
+        <a class="m-left create-btn" href="{{ path('app_equipment_new') }}">Créer</a>
+    {% endif %}
+</main>
+
+{% endblock %}

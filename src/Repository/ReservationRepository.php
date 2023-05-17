@@ -39,28 +39,29 @@ class ReservationRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Reservation[] Returns an array of Reservation objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('r.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
 
-//    public function findOneBySomeField($value): ?Reservation
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+
+    public function findAvailableEquipmentsByDateAndLocation($date, $location)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT e
+        FROM App\Entity\Equipment e
+        WHERE e.rentalLocation = :location
+        AND e.id NOT IN (
+            SELECT e2.id
+            FROM App\Entity\Equipment e2
+            JOIN e2.reservations r
+            WHERE r.dateLocation = :date
+        )'
+        )->setParameter('date', $date)
+            ->setParameter('location', $location);
+
+        return $query->getResult();
+    }
+
+
+
+
 }

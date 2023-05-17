@@ -1,0 +1,410 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block title %}Location{% endblock %}
+
+{% block body %}
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500&family=Roboto:wght@400&display=swap" rel="stylesheet">
+<style>
+.comfortaa {
+    font-family: 'Comfortaa', cursive;
+}
+
+.roboto {
+    font-family: 'Roboto', sans-serif;
+}
+</style>
+<h1 class="comfortaa text-center text-blue-900 font-semibold text-3xl my-5 mt-9">Points de location</h1>
+
+<div id="map" style="width: 100%; height: 500px;"></div>
+
+<script>
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 11,
+            center: new google.maps.LatLng({{ rentalLocations[0].gpsLongitude }}, {{ rentalLocations[0].gpsLatitude }}),
+            styles: [
+    {
+        "featureType": "administrative",
+        "elementType": "all",
+        "stylers": [
+            {
+                "saturation": "-100"
+            },
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "administrative.country",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "administrative.province",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "administrative.province",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "administrative.locality",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "administrative.neighborhood",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "administrative.land_parcel",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "landscape",
+        "elementType": "all",
+        "stylers": [
+            {
+                "saturation": -100
+            },
+            {
+                "lightness": 65
+            },
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "landscape.man_made",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "elementType": "all",
+        "stylers": [
+            {
+                "saturation": -100
+            },
+            {
+                "lightness": "50"
+            },
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.attraction",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.business",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.government",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.government",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.medical",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.park",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.place_of_worship",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.school",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.school",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.sports_complex",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "all",
+        "stylers": [
+            {
+                "saturation": "-100"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway.controlled_access",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway.controlled_access",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "road.arterial",
+        "elementType": "all",
+        "stylers": [
+            {
+                "lightness": "30"
+            },
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "elementType": "all",
+        "stylers": [
+            {
+                "lightness": "40"
+            },
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "transit",
+        "elementType": "all",
+        "stylers": [
+            {
+                "saturation": -100
+            },
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "transit",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "transit",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "transit.station",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "transit.station.rail",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "lightness": -25
+            },
+            {
+                "saturation": -97
+            },
+            {
+                "color": "#81b1a0"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "lightness": -25
+            },
+            {
+                "saturation": -100
+            }
+        ]
+    }
+]
+        });
+
+        {% for rentalLocation in rentalLocations %}
+        var marker = new google.maps.Marker({
+            position: new google.maps.LatLng({{ rentalLocation.gpsLongitude }}, {{ rentalLocation.gpsLatitude }}),
+            map: map
+        });
+        {% endfor %}
+    }
+
+    google.maps.event.addDomListener(window, 'load', initMap);
+</script>
+
+<div class="grid lg:grid-cols-2 gap-4 mt-5 roboto">
+    {% for rentalLocation in rentalLocations %}
+        <div class="p-4 bg-white shadow-sm rounded-lg">
+            <h2 class="comfortaa text-blue-900 font-semibold text-xl mb-2">{{ rentalLocation.city }}</h2>
+            <p class="text-gray-600">
+                <span class="text-teal-600 font-medium">Adresse: </span>{{ rentalLocation.address }}, {{ rentalLocation.additionalAddress }},
+            </p>
+            <p class="text-gray-600">
+                <span class="text-teal-600 font-medium">Code Postal: </span>{{ rentalLocation.zipCode }},
+            </p>
+            <p class="text-gray-600">
+                <span class="text-teal-600 font-medium">Téléphone: </span>{{ rentalLocation.phone }},
+            </p>
+            <p class="text-gray-600">
+                <span class="text-teal-600 font-medium">Latitude: </span>{{ rentalLocation.gpsLatitude }},
+            </p>
+            <div class="flex justify-between">
+            <p class="text-gray-600">
+                <span class="text-teal-600 font-medium">Longitude: </span>{{ rentalLocation.gpsLongitude }},
+            </p>
+            <a href="{{ path('prereservation') }}" class="bottom-2 right-2 bg-teal-500 hover:bg-blue-900 text-white py-2 px-4 rounded transition-colors duration-500">
+                Réserver
+            </a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

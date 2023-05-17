@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réserver{% endblock %}
+
+{% block body %}
+    <h1>Réserver votre équipement</h1>
+
+    <form method="post" action="{{ path('prereservation_save') }}">
+        <section class="d-flex-c-center">
+            <div class="row">
+                <label for="location-date">Jour de réservation:</label>
+                <input class="input" type="date" id="location-date" name="location-date"
+                value="<?php new DateTime('now') ?>"
+                min="<?php new DateTime('now') ?>" max="<?php new DateTime('now') ?>">
+            </div>
+
+            <div class="row">
+                <label for="location">Lieu de location:</label>
+                <select class="input" id="location" name="location">
+                    {% for location in locations %}
+                        <option value="{{ location.id }}">{{ location.address }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button class="reservation-btn" type="submit">Réserver</button>
+        
+        </section>
+    </form>
+
+{% endblock %}
