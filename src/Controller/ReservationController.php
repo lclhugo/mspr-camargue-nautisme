@@ -73,7 +73,7 @@ class ReservationController extends AbstractController
             $reservationRepository->save($reservation, true);
 
             //redirect to the index
-            return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('prereservation', [], Response::HTTP_SEE_OTHER);
         }
 
         //render the view
