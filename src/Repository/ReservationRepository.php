@@ -41,24 +41,23 @@ class ReservationRepository extends ServiceEntityRepository
 
 
 
-    public function findAvailableEquipmentsByDateAndLocation($date, $getId)
+    public function findAvailableEquipmentsByDateAndLocation($date, $location)
     {
         $entityManager = $this->getEntityManager();
 
         $query = $entityManager->createQuery(
             'SELECT e
-            FROM App\Entity\Equipment e
-            WHERE e.id NOT IN (
-                SELECT e2.id
-                FROM App\Entity\Equipment e2
-                JOIN e2.reservations r
-                WHERE r.dateLocation = :date
-                AND r.Location = :location
-            )'
+        FROM App\Entity\Equipment e
+        WHERE e.rentalLocation = :location
+        AND e.id NOT IN (
+            SELECT e2.id
+            FROM App\Entity\Equipment e2
+            JOIN e2.reservations r
+            WHERE r.dateLocation = :date
+        )'
         )->setParameter('date', $date)
-            ->setParameter('location', $getId);
+            ->setParameter('location', $location);
 
-        // returns an array of Product objects
         return $query->getResult();
     }
 
