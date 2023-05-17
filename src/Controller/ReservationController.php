@@ -58,16 +58,25 @@ class ReservationController extends AbstractController
         $dateConverted = new \DateTime($date);
 
         //get all the equipments that are not reserved for the date and location
-//        $equipments = $equipmentRepository->findAvailableEquipmentsByDateAndLocation($dateConverted, $location->getId());
         $reservation = new Reservation();
         $reservation->setDateLocation($dateConverted);
 
         $equipment = new Equipment();
         $equipment->setRentalLocation($location);
 
+        $data = $reservationRepository->findAvailableEquipmentsByDateAndLocation($reservation->getDateLocation(), $location->getId());
+        //generate the form and add a field for equipments
+        $form = $this->createForm(ReservationFormType::class, $reservation);
+        $form->add('equipment', EntityType::class, [
+            'class' => Equipment::class,
+            'choices' => $data,
+            'choice_label' => 'description',
+            'label' => 'Equipement',
+            'placeholder' => 'Choisissez un équipement',
+            'required' => true,
+            ]);
 
-        //create the form
-        $form = $this->createForm(ReservationFormType::class, [$reservation, $equipment]);
+        //handle the request
         $form->handleRequest($request);
 
         //if the form is submitted and valid
@@ -80,11 +89,11 @@ class ReservationController extends AbstractController
 
         //render the view
         return $this->renderForm('reservation/new.html.twig', [
-                    'reservation' => $reservation,
-                    'form' => $form,
-                    'date' => $date,
-                    'id' => $id,
-                ]);
+            'reservation' => $reservation,
+            'form' => $form,
+            'date' => $date,
+            'id' => $id,
+        ]);
 
     }
 
