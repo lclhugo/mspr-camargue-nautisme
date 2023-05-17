@@ -31,9 +31,6 @@ class Reservation
     #[ORM\JoinColumn(nullable: false)]
     private ?Equipment $equipment = null;
 
-    #[ORM\ManyToOne(inversedBy: 'reservations')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?RentalLocation $Location = null;
 
 
     public function getId(): ?int
@@ -107,17 +104,6 @@ class Reservation
         $this->createdAt = new \DateTimeImmutable();
     }
 
-    public function getLocation(): ?RentalLocation
-    {
-        return $this->Location;
-    }
-
-    public function setLocation(RentalLocation $Location): self
-    {
-        $this->Location = $Location;
-
-        return $this;
-    }
 
 
 }

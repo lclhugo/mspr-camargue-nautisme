@@ -42,7 +42,7 @@ class ReservationFormType extends AbstractType
                 'label' => 'Equipement',
                 'class' => Equipment::class,
                 'choices' => $ReservationRepository->findAvailableEquipmentsByDateAndLocation($reservation->getDateLocation(), $reservation->getLocation()),
-                'choice_label' => 'description',
+                'choice_label' => 'category.name',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please select one equipment',
