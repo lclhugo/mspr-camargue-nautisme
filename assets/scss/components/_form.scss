@@ -8,6 +8,8 @@ form {
     margin: 5% auto;
     padding: 5%;
     display: flex;
+    box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.2);
+    width: 95%;
   }
 
   .row {
@@ -32,8 +34,7 @@ form {
   }
 }
 
-@include m.for-tablet {
-}
+@include m.for-tablet {}
 
 @include m.for-desktop {
   form {
@@ -42,8 +43,8 @@ form {
       box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.2);
     }
 
-
-    label, .input {
+    label,
+    .input {
       font-size: 1.5rem;
     }
   }
