@@ -1,20 +1,30 @@
 {{ form_start(form) }}
-    <section class="form-errors">
-        {{ form_errors(form) }}
-    </section>
+
+    {% if form_errors(form.nameClient) %}
+        <div class="alert-reservation error-reservation">
+            {{ form_errors(form.nameClient) }}
+        </div>
+    {% elseif form_errors(form.emailClient) %}
+        <div class="alert-reservation error-reservation">
+            {{ form_errors(form.emailClient) }}
+        </div>
+    {% elseif form_errors(form.equipment) %}
+        <div class="alert-reservation error-reservation">
+            {{ form_errors(form.equipment) }}
+        </div>
+    {% endif %}
+
+
     <section class="form d-flex-c-center">
         <div class="row">
-            {{ form_errors(form.nameClient) }}
             {{ form_label(form.nameClient) }}
             {{ form_widget(form.nameClient, {'attr': {'class': 'input'}}) }}
         </div>
         <div class="row">
-            {{ form_errors(form.emailClient) }}
             {{ form_label(form.emailClient) }}
             {{ form_widget(form.emailClient, {'attr': {'class': 'input'}}) }}
         </div>
         <div class="row">
-            {{ form_errors(form.equipment) }}
             {{ form_label(form.equipment) }}
             {{ form_widget(form.equipment, {'attr': {'class': 'input'}}) }}
         </div>

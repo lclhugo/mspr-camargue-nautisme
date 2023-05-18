@@ -1,0 +1,44 @@
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+
+footer{
+    height: 35vh;
+    background-color: #4b5563;
+    display: flex;
+    justify-content: center;
+    font-size: 2rem;
+    margin-top: 1%;
+
+    section{
+        width: 90%;
+        margin: auto;   
+    }
+    
+    section div{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    section div ul{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    section div ul li a {
+        color: v.$white;
+    }
+}
+
+@include m.for-tablet {
+}
+
+/* media queries with mixins */
+@include m.for-desktop {
+    footer {
+        section {
+            width: 50%;
+            background-color: #4b5563;
+        }
+    }
+}

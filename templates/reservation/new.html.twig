@@ -3,11 +3,9 @@
 {% block title %}Réservation{% endblock %}
 
 {% block body %}
-    <main>
         <h1>Réserver votre équipement</h1>
 
         {{ include('reservation/_form.html.twig') }}
 
-        <a class="view-btn" href="{{ path('app_reservation_index') }}">Retour</a>
-    </main>
-    {% endblock %}
+        <a class="view-btn" href="{{ path('prereservation') }}">Retour</a>
+{% endblock %}

@@ -31,11 +31,18 @@
     }
 }
 
+h1 {
+    margin-bottom: 15%;
+}
+
 //media queries
 @include m.for-tablet {}
 
 @include m.for-desktop {
     .equipment {
+        h1 {
+            margin-bottom: 5%;
+        }
         .card {
             width: 90%;
             flex-direction: row;

@@ -3,7 +3,10 @@
 {% block title %}Connexion{% endblock %}
 
 {% block body %}
-<form method="post">
+<h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
+
+
+<form method="post" style="display: flex; flex-direction: column; justify-content: center; width: 35%; margin: auto; padding: 5%; box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.2);">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
@@ -13,30 +16,15 @@
             You are logged in as {{ app.user.email }}, <a href="{{ path('app_logout') }}">Logout</a>
         </div>
     {% endif %}
-
-    <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
+    
     <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+    <input style="padding: 2%; font-size: 1.5rem;" type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+
     <label for="inputPassword">Mot de passe</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+    <input style="padding: 2%; font-size: 1.5rem;" type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-    {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
-
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
-        </div>
-    #}
-
-    <button class="btn btn-lg btn-primary" type="submit">
-        Se connecter
-    </button>
+    <button class="form" type="submit" style="width: 50%; margin: 5% auto; padding: 2%; font-size: 1.5rem; border: none; background-color: green; color: white;">Se connecter</button>
 </form>
 {% endblock %}

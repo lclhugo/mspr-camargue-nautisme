@@ -6,6 +6,19 @@
 {% block body %}
 	<h1>Réserver votre équipement</h1>
 
+	{% for message in app.flashes('success') %}
+		<div class="alert-reservation success-reservation">
+			{{ message }}
+		</div>
+	{% endfor %}
+
+	{% for message in app.flashes('error') %}
+		<div class="alert-reservation error-reservation">
+			{{ message }}
+		</div>
+	{% endfor %}
+
+
 	<form method="post" action="{{ path('prereservation_save') }}">
 		<section class="d-flex-c-center">
 			<div class="row">
@@ -22,13 +35,14 @@
 				</select>
 			</div>
 
-			<button class="reservation-btn" type="submit">Réserver</button>
+			<button class="reservation-btn" type="submit">Confirmer</button>
 
 		</section>
 	</form>
 
-	<a class="view-btn" href="{{ path('app_reservation_index') }}">Retour</a>
-
+	{% if app.user %}
+		<a class="view-btn" href="{{ path('app_reservation_index') }}">Voir les réservations</a>
+	{% endif %}
 
 {% endblock %}
 

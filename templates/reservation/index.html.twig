@@ -3,36 +3,39 @@
 {% block title %}Vos Réservations{% endblock %}
 
 {% block body %}
-    <h1>Vos Réservations</h1>
-    <main>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Email</th>
-                    <th>Date</th>
-                    <th>Nom</th>
-                    <th>Date de création</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody class="table">
-            {% for reservation in reservations %}
-                <tr>
-                    <td>{{ reservation.emailClient }}</td>
-                    <td>{{ reservation.dateLocation ? reservation.dateLocation|date('d-m-Y') : '' }}</td>
-                    <td>{{ reservation.nameClient }}</td>
-                    <td>{{ reservation.createdAt ? reservation.createdAt|date('d-m-Y') : '' }}</td>
-                    <td class='btn-flex'>
-                        <a class="edit-btn" href="{{ path('app_reservation_edit', {'id': reservation.id}) }}">Modifier</a>
-                        {{ include('reservation/_delete_form.html.twig') }}
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+    {% if app.user %}
+        <main class="reservation">
+        <h1>Vos Réservations</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Réserver pour le</th>
+                        <th>Nom</th>
+                        <th>Date de création</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for reservation in reservations %}
+                    <tr>
+                        <td>{{ reservation.emailClient }}</td>
+                        <td>{{ reservation.dateLocation ? reservation.dateLocation|date('d-m-Y') : '' }}</td>
+                        <td>{{ reservation.nameClient }}</td>
+                        <td>{{ reservation.createdAt ? reservation.createdAt|date('d-m-Y') : '' }}</td>
+                        <td>
+                            {# <a class="edit-btn" href="{{ path('app_reservation_edit', {'id': reservation.id}) }}">Modifier</a> #}
+                            {{ include('reservation/_delete_form.html.twig') }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
 
-        <a class="reservation-btn m-left" href="{{ path('prereservation') }}">{{ button_label|default('Réserver') }}</a>
-    </main>
-
+            <a class="reservation-btn m-left" href="{{ path('prereservation') }}">{{ button_label|default('Réserver') }}</a>
+        </main>
+    {% else %}
+        <a style="margin: 25% auto;" class="reservation-btn m-left" href="{{ path('app_login') }}">{{ button_label|default('Se connecter') }}</a>
+    {% endif %}
 
 {% endblock %}
