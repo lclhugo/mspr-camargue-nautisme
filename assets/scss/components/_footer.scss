@@ -12,17 +12,20 @@ footer{
     section{
         width: 90%;
         margin: auto;   
+        height: 70%;
     }
     
     section div{
+        height: 100%;
         width: 100%;
         display: flex;
-        justify-content: center;
     }
     section div ul{
         width: 100%;
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
+        align-items: center;
+        flex-direction: column;
     }
     
     section div ul li a {
@@ -35,10 +38,4 @@ footer{
 
 /* media queries with mixins */
 @include m.for-desktop {
-    footer {
-        section {
-            width: 50%;
-            background-color: #4b5563;
-        }
-    }
 }

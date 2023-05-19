@@ -64,17 +64,23 @@
 
       .text {
         width: 100%;
-        padding: 0.625rem 0.9375rem;
+        // padding: 0.625rem 0.9375rem;
         position: absolute;
-        bottom: 0;
+        bottom: 50%;
         font-size: 0.9rem;
         color: v.$white;
-        background-color: v.$black;
+        // background-color: v.$black;
 
         .title {
-          margin: 0.5rem 0 0 0;
-          font-size: 1.2rem;
-          font-weight: normal;
+          // margin: 0.5rem 0 0 0;
+          font-size: 5rem;
+          font-weight: bold;
+          text-align: center;
+        }
+
+        .reservation-btn{
+          margin: auto;
+          background-color: black;
         }
       }
     }
