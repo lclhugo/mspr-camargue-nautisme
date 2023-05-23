@@ -8,7 +8,7 @@
 
         {% set newArray = [] %}
 
-        {% for equipment in equipment %}
+        {% for equipment in equipments %}
             {% if equipment.category.name not in newArray %}
                 <section class="card">
                     <img class="img-equipment" src="{{ asset('uploads/' ~ equipment.image) }}" alt="{{ equipment.category.name }}">

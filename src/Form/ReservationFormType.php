@@ -34,7 +34,7 @@ class ReservationFormType extends AbstractType
             ->add("nameClient", TextType::class, [
                 'label' => 'Nom'
             ]);
-//            ->add("dateLocation")
+            //->add("dateLocation")
             //use the $equipment that is an array of equipment that are not reserved for the date and location as options
 
     }

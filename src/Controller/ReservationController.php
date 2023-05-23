@@ -67,9 +67,6 @@ class ReservationController extends AbstractController
         $reservation = new Reservation();
         $reservation->setDateLocation($dateConverted);
 
-        // $equipment = new Equipment();
-        // $equipment->setRentalLocation($location);
-
         $data = $reservationRepository->findAvailableEquipmentsByDateAndLocation($reservation->getDateLocation(), $location->getId());
         //generate the form and add a field for equipments
         $form = $this->createForm(ReservationFormType::class, $reservation);
