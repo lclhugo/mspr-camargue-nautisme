@@ -1,4 +1,4 @@
-@use '../base/variables'as v;
+@use '../base/variables' as v;
 
 .hero {
   width: 100%;
@@ -64,17 +64,23 @@
 
       .text {
         width: 100%;
-        padding: 0.625rem 0.9375rem;
+        // padding: 0.625rem 0.9375rem;
         position: absolute;
-        bottom: 0;
+        bottom: 40%;
         font-size: 0.9rem;
         color: v.$white;
-        background-color: v.$black;
+        // background-color: v.$black;
 
         .title {
-          margin: 0.5rem 0 0 0;
-          font-size: 1.2rem;
-          font-weight: normal;
+          // margin: 0.5rem 0 0 0;
+          font-size: 4rem;
+          font-weight: bold;
+          text-align: center;
+        }
+
+        .reservation-btn{
+          margin: auto;
+          background-color: black;
         }
       }
     }
@@ -87,7 +93,7 @@
       position: absolute;
       top: calc(50% - 1rem);
       user-select: none;
-      font-size: 1rem;
+      font-size: 5rem;
       color: v.$white;
       border-radius: 50%;
       transition: 0.6s ease;
@@ -99,11 +105,11 @@
     }
 
     .prev {
-      left: 0.8rem;
+      left: 2rem;
     }
 
     .next {
-      right: 0.8rem;
+      right: 2rem;
     }
 
     .dots {
@@ -155,4 +161,3 @@
   border: 0.20rem solid v.$white;
   border-radius: 50%;
 }
-

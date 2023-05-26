@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ReservationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -16,12 +17,15 @@ class Reservation
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Veuillez renseigner votre email')]
+    #[Assert\Email(message: 'L\'adresse {{ value }} n\'est pas une adresse valide.')]
     private ?string $emailClient = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateLocation = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank(message: 'Veuillez renseigner votre nom')]
     private ?string $nameClient = null;
 
     #[ORM\Column]
@@ -29,6 +33,8 @@ class Reservation
 
     #[ORM\ManyToOne(inversedBy: 'reservations')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank(message: 'Veuillez selectionner un équipement')]
+    // #[Assert\Choice(message: 'L\'adresse {{ value }} n\'est pas une adresse valide.')]
     private ?Equipment $equipment = null;
 
 

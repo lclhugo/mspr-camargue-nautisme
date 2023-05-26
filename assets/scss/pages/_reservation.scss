@@ -1,18 +1,25 @@
 @use '../base/variables' as v;
 @use '../base/mixins' as m;
 
-.table{
-    width: 100%;
-    padding: 5%;
+.table {
+    width: 90%;
+    margin: 2% auto;
     text-align: left;
 }
 
-.btn-flex{
-    display: flex;
-    justify-content: start;
-    gap: 5%;
+.m-left {
+    margin-left: 2%;
 }
 
-.m-left{
-    margin-left: 2%;
+h1 {
+    margin-bottom: 15%;
+}
+
+//media queries
+@include m.for-tablet {}
+
+@include m.for-desktop {
+    h1 {
+        margin-bottom: 5%;
+    }
 }

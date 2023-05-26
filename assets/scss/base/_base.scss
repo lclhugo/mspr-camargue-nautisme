@@ -17,6 +17,10 @@ a {
   text-decoration: none;
 }
 
+h1 {
+  padding: 1%;
+}
+
 /* Base */
 
 body {
@@ -29,9 +33,7 @@ body {
   justify-content: center;
   align-items: center;
 }
-.bg-primary{
+
+.bg-primary {
   background-color: v.$primary;
 }
-
-
-

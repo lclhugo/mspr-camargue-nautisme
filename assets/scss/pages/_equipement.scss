@@ -1,11 +1,13 @@
 @use '../base/variables' as v;
 @use '../base/mixins' as m;
 
-.equipment{
-    .card{
+.equipment {
+    .card {
+        width: 90%;
         display: flex;
         flex-direction: column;
         margin: 5% auto;
+        box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.2);
     }
 
     .img-equipment {
@@ -14,26 +16,38 @@
         object-fit: cover;
     }
 
-    .text-body{
+    .text-body {
         padding: 2%;
+        border-top: 1px solid rgba(0, 0, 0, 0.2);
     }
 
-    .price{
-        font-size: 1.6rem;
+    .text-body p {
+        margin: 2% 0;
     }
+
+    .price {
+        font-size: 1.6rem;
+        margin-bottom: 5%;
+    }
+}
+
+h1 {
+    margin-bottom: 15%;
 }
 
 //media queries
-@include m.for-tablet {
-}
+@include m.for-tablet {}
 
 @include m.for-desktop {
-    .equipment{
-        .card{
+    .equipment {
+        h1 {
+            margin-bottom: 5%;
+        }
+        .card {
             width: 90%;
             flex-direction: row;
             box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.2);
-            height: 350px;
+            height: 600px;
         }
 
         .text-body {
@@ -42,9 +56,11 @@
             flex-direction: column;
             justify-content: space-between;
             width: 50%;
+            border-top: none;
+            border-left: 1px solid rgba(0, 0, 0, 0.2);
         }
 
-        .img-equipment{
+        .img-equipment {
             width: 50%;
             object-fit: cover;
             height: 100%;

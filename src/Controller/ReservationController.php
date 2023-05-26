@@ -47,7 +47,13 @@ class ReservationController extends AbstractController
         $id = $request->request->get('location');
         $formattedDate = date('Y-m-d', strtotime($date));
 
-        return $this->redirectToRoute('app_reservation_new', ['date' => $formattedDate, 'id' => $id]);
+        if(!empty($date) && !empty($formattedDate)){
+            return $this->redirectToRoute('app_reservation_new', ['date' => $formattedDate, 'id' => $id]);
+        }else{
+            $this->addFlash('error', 'Tous les champs doivent être remplie');
+            return $this->redirectToRoute('prereservation');
+        }
+
     }
 
     #[Route('/new/{date}/{id}', name: 'app_reservation_new', methods: ['GET', 'POST'])]
@@ -61,16 +67,13 @@ class ReservationController extends AbstractController
         $reservation = new Reservation();
         $reservation->setDateLocation($dateConverted);
 
-        $equipment = new Equipment();
-        $equipment->setRentalLocation($location);
-
         $data = $reservationRepository->findAvailableEquipmentsByDateAndLocation($reservation->getDateLocation(), $location->getId());
         //generate the form and add a field for equipments
         $form = $this->createForm(ReservationFormType::class, $reservation);
         $form->add('equipment', EntityType::class, [
             'class' => Equipment::class,
             'choices' => $data,
-            'choice_label' => 'description',
+            'choice_label' => 'name',
             'label' => 'Equipement',
             'placeholder' => 'Choisissez un équipement',
             'required' => true,
@@ -82,8 +85,9 @@ class ReservationController extends AbstractController
         //if the form is submitted and valid
         if ($form->isSubmitted() && $form->isValid()) {
             $reservationRepository->save($reservation, true);
+            $this->addFlash('success', 'Votre réservation à bien été prise en compte');
 
-            //redirect to the index
+            //redirect to the form reservation
             return $this->redirectToRoute('prereservation', [], Response::HTTP_SEE_OTHER);
         }
 

@@ -47,13 +47,13 @@ class ReservationRepository extends ServiceEntityRepository
 
         $query = $entityManager->createQuery(
             'SELECT e
-        FROM App\Entity\Equipment e
-        WHERE e.rentalLocation = :location
-        AND e.id NOT IN (
-            SELECT e2.id
-            FROM App\Entity\Equipment e2
-            JOIN e2.reservations r
-            WHERE r.dateLocation = :date
+            FROM App\Entity\Equipment e
+            WHERE e.rentalLocation = :location
+            AND e.id NOT IN (
+                SELECT e2.id
+                FROM App\Entity\Equipment e2
+                JOIN e2.reservations r
+                WHERE r.dateLocation = :date
         )'
         )->setParameter('date', $date)
             ->setParameter('location', $location);

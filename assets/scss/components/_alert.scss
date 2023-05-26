@@ -1,0 +1,26 @@
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+
+.alert-reservation{
+    text-align: center;
+    width: 95%;
+    margin: auto;
+    font-size: 2rem;
+    color: white;
+    padding: 2%;
+}
+
+.success-reservation{
+    background-color: v.$tertiary;
+}
+
+.error-reservation{
+    background-color: red;
+}
+
+@include m.for-desktop {
+    .alert-reservation {
+        font-size: 1.5rem;
+        width: 50%;
+    }
+}

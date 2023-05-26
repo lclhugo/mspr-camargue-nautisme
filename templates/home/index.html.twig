@@ -5,29 +5,37 @@
 {% block body %}
 
 	<section class="hero">
+
 		<div class="carrousel">
 			<section class="has-dflex-center">
 				<div class="lx-row">
 					<div class="lx-card carousel-container">
 						<div class="item fade">
-							<div class="video"><video autoplay muted loop>
-									<source src="{{ asset('img/video_kayak.webm') }}" type="video/webm"/>
+							<div class="image">
+								<video class="video" autoplay muted loop>
+										<source src="{{ asset('img/video_kayak.webm') }}" type="video/webm"/>
 								</video>
 							</div>
-							{# <div class="text is-text-right">
-							<h1 class="title">This item has a title</h1>
-							<p>This item has a caption, aligned to the right.</p>
-						</div> #}
+							<div class="text is-text-right">
+								<h1 class="title">Bienvenue sur le site Camargue Nautisme</h1>
+								<a class="reservation-btn" href="{{ path('prereservation') }}">Réserver</a>
+							</div>
 						</div>
 						<div class="item fade">
 							<div class="image"><img src="{{ asset('img/kayaks.png') }}" alt="hero"></div>
-{#							 <div class="text is-text-left">#}
-{#                            <h1 class="title">This item has a title</h1>#}
-{#                            <p>This item has a caption, aligned to the left.</p>#}
-{#                        </div> #}
+
+							<div class="text is-text-right">
+								<h1 class="title">Bienvenue sur le site Camargue Nautisme</h1>
+								<a class="reservation-btn" href="{{ path('prereservation') }}">Réserver</a>
+							</div>
 						</div>
 						<div class="item fade">
 							<div class="image"><img src="{{ asset('img/paddle.jpeg') }}" alt="hero"></div>
+							
+							<div class="text is-text-right">
+								<h1 class="title">Bienvenue sur le site Camargue Nautisme</h1>
+								<a class="reservation-btn" href="{{ path('prereservation') }}">Réserver</a>
+							</div>
 						</div>
 						<a class="prev has-dflex-center">
 							<i class="fas fa-angle-left"></i>

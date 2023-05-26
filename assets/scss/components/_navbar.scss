@@ -5,24 +5,30 @@
   display: inline;
 }
 
-.nav, .dropdown-content {
-   display: none;
+.nav,
+.dropdown-content {
+  display: none;
 }
 
 .navbar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
 
   .nav-icons .fas {
     position: relative;
-    top: 0.5rem;
-    left: 90%;
-    font-size : 1.5rem;
+    top: 1rem;
+    left: 85%;
+    font-size: 3rem;
     color: v.$primary;
     cursor: pointer;
     z-index: 2;
+    height: fit-content;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 15px;
+    width: fit-content;
+    padding: 1%;
   }
 
   .nav {
@@ -52,17 +58,27 @@
 }
 
 .active {
-    display: block;
+  display: block;
 }
 
 .d-none {
-  display: none!important;
+  display: none !important;
+}
+
+@include m.for-tablet {
+  .navbar {
+    .nav-icons .fas {
+      font-size: 8rem;
+      padding: .5%;
+    }
+  }
 }
 
 /* media queries with mixins */
 @include m.for-desktop {
-  .navbar .nav-icons .fas {
-    font-size: 3rem;
+  .navbar {
+    .nav-icons .fas {
+      left: 90%;
+    }
   }
-
-  }
+}
