@@ -1,9 +1,11 @@
 # camargue_nautisme
 
+Projet Symfony fait en cours
+
 # commandes:
 
 installer le projet:
-`git clone https://github.com/lclhugo/camargue_nautisme`
+`git clone https://github.com/lclhugo/mspr-camargue-nautisme`
 
 installer les packages composer
 `composer install`
